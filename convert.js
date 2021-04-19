@@ -25,7 +25,11 @@ function convertFiles() {
     }
 
     // convert heading
-    text = text.replace(/^###\s-?(.+?)$/gm, '[HEADING=3]$1[/HEADING]')
+    text = text
+        // replace lines after heading
+        .replace(/(#.+?)(\r\n)+?/gm, "$1\n")
+        // replace heading
+        .replace(/^###\s-?(.+?)$/gm, '[HEADING=3]$1[/HEADING]')
         .replace(/^##\s+?(.+?)$/gm, '[HEADING=2]$1[/HEADING]')
         .replace(/^#\s+?(.+?)$/gm, '[HEADING=1]$1[/HEADING]')
 
@@ -50,15 +54,15 @@ function convertFiles() {
         .replace(/\[\/TR\]\r\n([^\[])/gm, "[/TR]\n[/TABLE]\n$1")
 
         // convert bold
-        .replace(/\*\*(.+?)\*\*/gm, "[b]$1[/b]")
-        .replace(/__(.+?)__/gm, "[b]$1[/b]")
+        .replace(/(^|\s)\*\*(.+?)\*\*(\s|$)/gm, "$1[b]$2[/b]$3")
+        .replace(/(^|\s)__(.+?)__(\s|$)/gm, "$1[b]$2[/b]$3")
 
         // convert italic
-        .replace(/\*(.+?)\*/gms, "[i]$1[/i]")
-        .replace(/_(.+?)_/gms, "[i]$1[/i]")
+        .replace(/(^|\s)\*(.+?)\*(\s|$)/gms, "$1[i]$2[/i]$3")
+        .replace(/(^|\s)_(.+?)_(\s|$)/gms, "$1[i]$2[/i]$3")
 
         // convert strike-through
-        .replace(/~~(.+?)~~/gms, "[s]$1[/s]")
+        .replace(/(^|\s)~~(.+?)~~(\s|$)/gms, "$1[s]$2[/s]3")
 
         // replace dangling escapes
         .replace(/\\/gm, "")
