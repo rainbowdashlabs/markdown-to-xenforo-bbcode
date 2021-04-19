@@ -45,10 +45,8 @@ function convertFiles() {
         // convert inline
         .replace(/`(.+?)`/gm, "[ICODE]$1[/ICODE]")
 
-        // Convert tables. This is clusterfuck and only works on windows
-        // sorry linux users
         // remove indicator line
-        .replace(/^\|[\s-:|]*?\|\r\n/gm, "")
+        .replace(/^\|[\s-:|]*?\|\n/gm, "")
         // replace start of table row
         .replace(/^\|/gm, "[TR][TD]")
         // replace end of table row
@@ -56,8 +54,8 @@ function convertFiles() {
         // replace table row separator
         .replace(/\|/gm, "[/TD][TD]")
         // add table at start and end
-        .replace(/([^\]])\r\n\[TR\]/gm, "$1\n[TABLE][TR]")
-        .replace(/\[\/TR\]\r\n([^\[])/gm, "[/TR]\n[/TABLE]\n$1")
+        .replace(/([^\]])\n\[TR\]/gm, "$1\n[TABLE][TR]")
+        .replace(/\[\/TR\]\n([^\[])/gm, "[/TR]\n[/TABLE]\n$1")
 
         // convert bold
         .replace(/(^|\s)\*\*(.+?)\*\*(\s|$)/gm, "$1[b]$2[/b]$3")
