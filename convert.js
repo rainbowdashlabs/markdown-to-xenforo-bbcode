@@ -13,6 +13,8 @@ function readInput() {
 }
 
 function convertFiles() {
+    LineEndingCorrector = require('line-ending-corrector').LineEndingCorrector
+
     let text = readInput();
 
     if (text == null) {
