@@ -26,14 +26,18 @@ function convertFiles() {
         return;
     }
 
+    let corrected = LineEndingCorrector.correctSync(text);
+
+    text = corrected[1];
+
     // convert heading
     text = text
         // replace lines after heading
-        .replace(/(#.+?)(\r\n)+?/gm, "$1\n")
+        .replace(/(#.+?)(\n+?)/gm, "$1\n")
         // replace heading
-        .replace(/^###\s-?(.+?)$/gm, '[HEADING=3]$1[/HEADING]')
-        .replace(/^##\s+?(.+?)$/gm, '[HEADING=2]$1[/HEADING]')
-        .replace(/^#\s+?(.+?)$/gm, '[HEADING=1]$1[/HEADING]')
+        .replace(/^###\s-?(.+?)\n+/gm, '[HEADING=3]$1[/HEADING]\n')
+        .replace(/^##\s+?(.+?)\n+/gm, '[HEADING=2]$1[/HEADING]\n')
+        .replace(/^#\s+?(.+?)\n+/gm, '[HEADING=1]$1[/HEADING]\n')
 
         // convert code blocks
         .replace(/```\s?([a-z]*)(.+?)```/gms, "[code=$1]$2[/code]")
