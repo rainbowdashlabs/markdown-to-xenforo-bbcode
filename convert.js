@@ -84,9 +84,12 @@ function convertFiles() {
         // convert rule
         .replace(/---+?/gm, "[HR][/HR]")
         .replace(/\*\*\*+?/gm, "[HR][/HR]")
-        .replace(/___+?/gm, "[HR][/HR]");
+        .replace(/___+?/gm, "[HR][/HR]")
 
-    console.log(text)
+        .replace(/>>>(.+?)\n\n/gm, "[QUOTE]$1[/QUOTE]\n")
+        .replace(/>(.+?)\n([^>])/gms, "[QUOTE]$1[/QUOTE]\n$2");
+
+    //console.log(text)
 
     try {
         fs.writeFileSync('output', text, "utf-8");
